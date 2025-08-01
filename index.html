@@ -1,126 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Jogo da Forca</title>
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-
-    <!-- Estilo personalizado -->
-    <link rel="stylesheet" href="./css/forca.css" media="screen">
-
-    <!-- Boxicons -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo da Forca</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <!-- Imagem do boneco -->
-        <div id="imagem"></div>
-
-        <!-- Letras da palavra secreta -->
-        <div id="palavra-secreta"></div>
-
-        <!-- Teclado virtual -->
-        <div id="teclado">
-            <div class="teclas">
-                <!-- A-I -->
-                <button onclick="verificaLetraEscolhida('A')">A</button>
-                <button onclick="verificaLetraEscolhida('B')">B</button>
-                <button onclick="verificaLetraEscolhida('C')">C</button>
-                <button onclick="verificaLetraEscolhida('D')">D</button>
-                <button onclick="verificaLetraEscolhida('E')">E</button>
-                <button onclick="verificaLetraEscolhida('F')">F</button>
-                <button onclick="verificaLetraEscolhida('G')">G</button>
-                <button onclick="verificaLetraEscolhida('H')">H</button>
-                <button onclick="verificaLetraEscolhida('I')">I</button>
-            </div>
-            <div class="teclas">
-                <!-- J-R -->
-                <button onclick="verificaLetraEscolhida('J')">J</button>
-                <button onclick="verificaLetraEscolhida('K')">K</button>
-                <button onclick="verificaLetraEscolhida('L')">L</button>
-                <button onclick="verificaLetraEscolhida('M')">M</button>
-                <button onclick="verificaLetraEscolhida('N')">N</button>
-                <button onclick="verificaLetraEscolhida('O')">O</button>
-                <button onclick="verificaLetraEscolhida('P')">P</button>
-                <button onclick="verificaLetraEscolhida('Q')">Q</button>
-                <button onclick="verificaLetraEscolhida('R')">R</button>
-            </div>
-            <div class="teclas">
-                <!-- S-Z -->
-                <button onclick="verificaLetraEscolhida('S')">S</button>
-                <button onclick="verificaLetraEscolhida('T')">T</button>
-                <button onclick="verificaLetraEscolhida('U')">U</button>
-                <button onclick="verificaLetraEscolhida('V')">V</button>
-                <button onclick="verificaLetraEscolhida('W')">W</button>
-                <button onclick="verificaLetraEscolhida('X')">X</button>
-                <button onclick="verificaLetraEscolhida('Y')">Y</button>
-                <button onclick="verificaLetraEscolhida('Z')">Z</button>
-                <button id="btnReiniciar">🎮</button>
-            </div>
-        </div>
-
-        <!-- Categoria da palavra -->
-        <div id="categoria"></div>
-
-        <!-- Modal Bootstrap (resultado) -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="modalBody"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Adicionar Palavra -->
-        <div id="modal-alerta" class="modal-container">
-            <div class="modal-add-palavra">
-                <div class="modal-header-add-palavra" id="modal-titulo">
-                    <span id="fechaModal" class="close">&times;</span>
-                    <h2>ADICIONAR PALAVRA</h2>
-                </div>
-                <div class="modal-body-add-palavra" id="modal-mensagem">
-                    <input id="addPalavra" type="text" placeholder="PALAVRA" required>
-                    <input id="addCategoria" type="text" placeholder="CATEGORIA" required>
-                    <button onclick="adicionarPalavra()">Adicionar</button>
-                </div>
-            </div>
-        </div>
+  <div class="container-forca">
+    <div class="top-bar">
+      <h1>Jogo da Forca</h1>
+      <button id="jogarAutomatico" onclick="listaAutomatica()" title="Alternar modo automático/manual">
+        <i class="bx bx-pause-circle"></i>
+      </button>
+      <span id="status">Modo Automático</span>
     </div>
 
-    <!-- Controles externos -->
-    <div id="status"></div>
-    
-    <button id="abreModalAddPalavra"><i class='bx bx-message-square-add'></i></button>
-    <img src="img/jogarNovamente.gif" id="jogarNovamente" alt="Jogar Novamente"> 
-    <button id="recarregar" onclick="sortear()"><i class='bx bx-refresh'></i></button> 
-    <button id="jogarAutomatico" onclick="listaAutomatica()"><i class='bx bx-pause-circle'></i></button>
+    <div id="imagem" class="imagem-forca"></div>
 
-    <!-- Scripts -->
-    <script src="js/forca.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+    <div class="palavra-container">
+      <div id="categoria">Categoria</div>
+      <div id="palavra-secreta" class="palavra"></div>
+    </div>
+
+    <div class="teclado">
+      <div id="teclado-letras">
+        <!-- Letras geradas com JS -->
+        <script>
+          const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          for (let letra of alfabeto) {
+            document.write(`<button class="tecla" id="tecla-${letra}" onclick="verificaLetraEscolhida('${letra}')">${letra}</button>`);
+          }
+        </script>
+      </div>
+    </div>
+
+    <div class="botoes">
+      <button id="btnReiniciar" class="btn btn-warning">Jogar Novamente</button>
+      <button id="abreModalAddPalavra" class="btn btn-info">Adicionar Palavra</button>
+    </div>
+  </div>
+
+  <!-- Modal de alerta -->
+  <div class="modal fade" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Título</h5>
+        </div>
+        <div class="modal-body" id="modalBody">Mensagem</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar palavra -->
+  <div id="modal-alerta" class="modal-custom">
+    <div class="modal-content-custom">
+      <span id="fechaModal" class="close">&times;</span>
+      <h2>Adicionar nova palavra</h2>
+      <input id="addPalavra" type="text" placeholder="Palavra"/>
+      <input id="addCategoria" type="text" placeholder="Categoria"/>
+      <button onclick="adicionarPalavra()" class="btn btn-success mt-2">Adicionar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
